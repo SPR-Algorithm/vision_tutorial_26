@@ -1,7 +1,7 @@
 # 作业一
 本作业要求实现一个c++的向量运算库，支持向量的算术运算。
 所有函数声明写在`vector.h`中，所有函数定义写在`vector.cpp`中。
-你修改vector.h,verctor.cpp，同时编写一个CMakelists.txt来完成作业。
+你修改vector.h,verctor.cpp，同时编写一个CMakeLists.txt来完成作业。
 同时，需要安装的库为gtest
 
 ```bash
