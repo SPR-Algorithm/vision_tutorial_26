@@ -1,0 +1,3 @@
+创建了自己的GitHub账号
+在VSCode中安装好了git
+正在学习git核心指令
