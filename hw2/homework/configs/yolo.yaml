@@ -1,0 +1,14 @@
+yolo_name: yolov5
+classify_model: assets/tiny_resnet.onnx
+yolov5_model_path: assets/yolov5.xml
+device: CPU
+min_confidence: 0.8
+use_traditional: true
+roi: 
+  x: 420
+  y: 50
+  width: 600
+  height: 600
+
+use_roi: false
+threshold: 150
