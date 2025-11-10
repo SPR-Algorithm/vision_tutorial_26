@@ -8,4 +8,5 @@
 3. 作业进行分文件编写，编写main.cpp文件来进行主流程的实现。利用Cmake进行编译程序。
 4. 最终提交的作业应包括类声明所使用的头文件，类定义的源文件，main.cpp，CMakeLists.txt，build文件夹以及其中的可执行程序，同时添加识别过的视频。
 5. 提交作业请将本文件夹通过git提交到自己的文件夹中。
+6. 本次作业同时进行线下检查。
 <div align="center"><strong>GOOD LUCK</strong></div>
