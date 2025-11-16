@@ -9,4 +9,6 @@
 （建议使用本次内容中的发布订阅作为通讯方式）
 
 
+pubsub_trans 软件包包含两个节点 [publisher_celsius_function.cpp](https://github.com/SPR-Algorithm/vision_tutorial_26/blob/main/hw4/pubsub_trans/src/publisher_celsius_function.cpp)  和 [subscriber_fahrenheit_function.cpp](https://github.com/SPR-Algorithm/vision_tutorial_26/blob/main/hw4/pubsub_trans/src/subscriber_fahrenheit_function.cpp)   
+
 
