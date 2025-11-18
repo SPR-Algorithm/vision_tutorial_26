@@ -1,5 +1,5 @@
-/home/ljl/workspace_lecture2/build/CMakeFiles/test_1.dir
-/home/ljl/workspace_lecture2/build/CMakeFiles/test_2.dir
-/home/ljl/workspace_lecture2/build/CMakeFiles/test_3.dir
-/home/ljl/workspace_lecture2/build/CMakeFiles/edit_cache.dir
-/home/ljl/workspace_lecture2/build/CMakeFiles/rebuild_cache.dir
+/Users/kyoko/Team_project/vision_tutorial_26/workspace_lecture2/build/CMakeFiles/test_1.dir
+/Users/kyoko/Team_project/vision_tutorial_26/workspace_lecture2/build/CMakeFiles/test_2.dir
+/Users/kyoko/Team_project/vision_tutorial_26/workspace_lecture2/build/CMakeFiles/test_3.dir
+/Users/kyoko/Team_project/vision_tutorial_26/workspace_lecture2/build/CMakeFiles/edit_cache.dir
+/Users/kyoko/Team_project/vision_tutorial_26/workspace_lecture2/build/CMakeFiles/rebuild_cache.dir

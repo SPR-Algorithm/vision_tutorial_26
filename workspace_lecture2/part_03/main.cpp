@@ -3,7 +3,7 @@
 #include <string>
 
 int main(){
-    std::string path = "/home/ljl/workspace_lecture2/part_03/img_01.jpg";
+    std::string path = "/Users/kyoko/Team_project/vision_tutorial_26/workspace_lecture2/part_03/img_01.jpg";
     cv::Mat originalImg = cv::imread(path);
     if (originalImg.empty()) {
         std::cerr << "无法加载原始图像: " << path << std::endl;

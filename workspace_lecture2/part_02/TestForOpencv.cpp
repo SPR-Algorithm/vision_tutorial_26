@@ -14,7 +14,7 @@
 // }
 
 int main() {
-    std::string path = "/home/ljl/workspace_lecture2/part_02/img_01.jpg";
+    std::string path = "img_01.jpg";
     convertToGray(path);
     return 0;
 }

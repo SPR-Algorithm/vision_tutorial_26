@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 project(Workspace_lecture2)
 
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_STANDARD 11)
+
 include_directories(part_01)
 add_executable(test_1 part_01/test.cpp)
 
