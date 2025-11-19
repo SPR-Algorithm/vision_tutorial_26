@@ -1,0 +1,20 @@
+[
+{
+  "directory": "/Users/kyoko/Team_project/vision_tutorial_26/learn_log/TJ/build",
+  "command": "/opt/homebrew/opt/llvm/bin/clang++  -I/Users/kyoko/Team_project/vision_tutorial_26/learn_log/TJ/include -isystem /opt/homebrew/Cellar/opencv/4.12.0_13/include/opencv4  -Wall -Wextra -g -std=gnu++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/learn_log_TJ.dir/src/main.cpp.o -c /Users/kyoko/Team_project/vision_tutorial_26/learn_log/TJ/src/main.cpp",
+  "file": "/Users/kyoko/Team_project/vision_tutorial_26/learn_log/TJ/src/main.cpp",
+  "output": "CMakeFiles/learn_log_TJ.dir/src/main.cpp.o"
+},
+{
+  "directory": "/Users/kyoko/Team_project/vision_tutorial_26/learn_log/TJ/build",
+  "command": "/opt/homebrew/opt/llvm/bin/clang++  -I/Users/kyoko/Team_project/vision_tutorial_26/learn_log/TJ/include -isystem /opt/homebrew/Cellar/opencv/4.12.0_13/include/opencv4  -Wall -Wextra -g -std=gnu++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/learn_log_TJ.dir/src/lightbar.cpp.o -c /Users/kyoko/Team_project/vision_tutorial_26/learn_log/TJ/src/lightbar.cpp",
+  "file": "/Users/kyoko/Team_project/vision_tutorial_26/learn_log/TJ/src/lightbar.cpp",
+  "output": "CMakeFiles/learn_log_TJ.dir/src/lightbar.cpp.o"
+},
+{
+  "directory": "/Users/kyoko/Team_project/vision_tutorial_26/learn_log/TJ/build",
+  "command": "/opt/homebrew/opt/llvm/bin/clang++  -I/Users/kyoko/Team_project/vision_tutorial_26/learn_log/TJ/include -isystem /opt/homebrew/Cellar/opencv/4.12.0_13/include/opencv4  -Wall -Wextra -g -std=gnu++17 -arch arm64 -Wall -Wextra -Wpedantic -o CMakeFiles/learn_log_TJ.dir/src/img_tool.cpp.o -c /Users/kyoko/Team_project/vision_tutorial_26/learn_log/TJ/src/img_tool.cpp",
+  "file": "/Users/kyoko/Team_project/vision_tutorial_26/learn_log/TJ/src/img_tool.cpp",
+  "output": "CMakeFiles/learn_log_TJ.dir/src/img_tool.cpp.o"
+}
+]

@@ -1,0 +1,3 @@
+/Users/kyoko/Team_project/vision_tutorial_26/learn_log/TJ/build/CMakeFiles/learn_log_TJ.dir
+/Users/kyoko/Team_project/vision_tutorial_26/learn_log/TJ/build/CMakeFiles/edit_cache.dir
+/Users/kyoko/Team_project/vision_tutorial_26/learn_log/TJ/build/CMakeFiles/rebuild_cache.dir
