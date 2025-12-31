@@ -1,0 +1,22 @@
+# camera_matrix: !!opencv-matrix
+# rows: 3
+#  cols: 3
+#  dt: d
+#  data: [fx, 0, cx, 0, fy, cy, 0, 0, 1]
+#distortion_coefficients: !!opencv-matrix
+#  rows: 5
+#  cols: 1
+#  dt: d
+#  data: [k1, k2, p1, p2, k3] 
+%YAML:1.0
+---
+camera_matrix: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ 1000., 0., 320., 0., 1000., 240., 0., 0., 1. ]
+distortion_coefficients: !!opencv-matrix
+   rows: 5
+   cols: 1
+   dt: d
+   data: [ 0., 0., 0., 0., 0. ]
