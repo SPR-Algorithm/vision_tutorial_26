@@ -11,30 +11,30 @@ class ArmorConfig
 {
 public:
     
-    inline static const float ANGLE_THRESHOLD = 45.0f;      // ½Ç¶È²îãĞÖµ
-    inline static const float AREA_THRESHOLD = 150.0f;       // Ãæ»ıãĞÖµ
-    inline static const float RATIO_THRESHOLD = 2.0f;        // ³¤¿í±ÈãĞÖµ
-    inline static const int BINARY_THRESH = 230;            // ¶şÖµ»¯ãĞÖµ
-    inline static const float EPS = 1e-6f;                  // ·À³ı0¼«Ğ¡Öµ
+    inline static const float ANGLE_THRESHOLD = 45.0f;      // è§’åº¦å·®é˜ˆå€¼
+    inline static const float AREA_THRESHOLD = 150.0f;       // é¢ç§¯é˜ˆå€¼
+    inline static const float RATIO_THRESHOLD = 2.0f;        // é•¿å®½æ¯”é˜ˆå€¼
+    inline static const int BINARY_THRESH = 230;            // äºŒå€¼åŒ–é˜ˆå€¼
+    inline static const float EPS = 1e-6f;                  // é˜²é™¤0æå°å€¼
 
     
-    inline static const cv::Mat camera_matrix =              // Ïà»úÄÚ²Î¾ØÕó
+    inline static const cv::Mat camera_matrix =              // ç›¸æœºå†…å‚çŸ©é˜µ
         (cv::Mat_<double>(3, 3) <<  1286.307063384126 , 0                  , 645.34450819155256, 
                                     0                 , 1288.1400736562441 , 483.6163720308021 , 
                                     0                 , 0                  , 1                   );
 
-    inline static const cv::Mat distort_coeffs =             // »û±äÏµÊı
+    inline static const cv::Mat distort_coeffs =             // ç•¸å˜ç³»æ•°
         (cv::Mat_<double>(1, 5) << -0.47562935060124745, 0.21831745829617311, 0.0004957613589406044, -0.00034617769548693592, 0);
 
-    inline static const double LIGHTBAR_LENGTH = 0.056;     // µÆÌõ³¤¶È µ¥Î»£ºÃ×£¬Ò»×ÖÎ´¸Ä
-    inline static const double ARMOR_WIDTH = 0.135;         // ×°¼×°å¿í¶È
+    inline static const double LIGHTBAR_LENGTH = 0.056;     // ç¯æ¡é•¿åº¦ å•ä½ï¼šç±³
+    inline static const double ARMOR_WIDTH = 0.135;         // è£…ç”²æ¿å®½åº¦
 
-    // ×°¼×°å3DÄ£ĞÍµã£ºÍêÈ«±£ÁôÔ­Ê¼×ø±ê
+    // è£…ç”²æ¿3Dæ¨¡å‹ç‚¹ï¼šå®Œå…¨ä¿ç•™åŸå§‹åæ ‡
     inline static const vector<Point3f> armor_3d_points = {
-        Point3f(-ARMOR_WIDTH/2,  LIGHTBAR_LENGTH/2, 0.0),  // ×óÉÏ
-        Point3f(ARMOR_WIDTH/2,   LIGHTBAR_LENGTH/2, 0.0),  // ÓÒÉÏ
-        Point3f(ARMOR_WIDTH/2,  -LIGHTBAR_LENGTH/2, 0.0),  // ÓÒÏÂ
-        Point3f(-ARMOR_WIDTH/2, -LIGHTBAR_LENGTH/2, 0.0)   // ×óÏÂ
+        Point3f(-ARMOR_WIDTH/2,  LIGHTBAR_LENGTH/2, 0.0),  // å·¦ä¸Š
+        Point3f(ARMOR_WIDTH/2,   LIGHTBAR_LENGTH/2, 0.0),  // å³ä¸Š
+        Point3f(ARMOR_WIDTH/2,  -LIGHTBAR_LENGTH/2, 0.0),  // å³ä¸‹
+        Point3f(-ARMOR_WIDTH/2, -LIGHTBAR_LENGTH/2, 0.0)   // å·¦ä¸‹
     };
 };
 
