@@ -1,8 +1,8 @@
 #include "ArmorDetector.h"
 
- //  灯条配对有效性校验:
+// 灯条配对有效性校验
 bool ArmorDetector::isPairValid(const LightBar& bar1, const LightBar& bar2, float& total_score) const {
-    RotatedRect r1 = bar1.getRect();    //const:该成员函数永远不会修改所属ArmorDetector对象的任何成员变量
+    RotatedRect r1 = bar1.getRect(); 
     RotatedRect r2 = bar2.getRect();
     
     float angle1 = ToolUtils::correctAngle(r1);
@@ -18,16 +18,10 @@ bool ArmorDetector::isPairValid(const LightBar& bar1, const LightBar& bar2, floa
     if (abs(r1.center.x - r2.center.x) < abs(r1.center.y - r2.center.y)) return false;
     if (center_dist < avg_height * 0.5f || center_dist > avg_height * 5.0f) return false;
     if (angle_diff > ArmorConfig::ANGLE_THRESHOLD) return false;
-    
-    float height_sim = 1.0f - abs(height1 - height2) / (max(height1, height2) + ArmorConfig::EPS);
-    float dist_score = 1.0f - abs(center_dist - avg_height * 2.0f) / (avg_height * 2.0f + ArmorConfig::EPS);
-    float angle_score = 1.0f - angle_diff / ArmorConfig::ANGLE_THRESHOLD;
-    total_score = height_sim * 0.4f + dist_score * 0.3f + angle_score * 0.3f;
-    
-    return (total_score > 0.4f);
+    return (true);
 }
 
-//   最优配对筛选：
+
 int ArmorDetector::selectBestPair(const vector<pair<LightBar, LightBar>>& all_pairs) const {
     int best_idx = 0;
     float max_score = 0.0f;
@@ -57,23 +51,22 @@ int ArmorDetector::selectBestPair(const vector<pair<LightBar, LightBar>>& all_pa
     return best_idx;
 }
 
-//  单帧处理：
 void ArmorDetector::processFrame(const Mat& frame, Mat& result) {
     result = frame.clone();
     Mat binary;
     
-    // 1. 预处理
+    //预处理
     Mat bgr[3];
     split(frame, bgr);
     Mat r_channel = bgr[2];
     GaussianBlur(r_channel, r_channel, Size(5, 5), 0);
     threshold(r_channel, binary, ArmorConfig::BINARY_THRESH, 255, THRESH_BINARY);
     
-    // 2. 查找轮廓
+    //查找轮廓
     vector<vector<Point>> contours;
     findContours(binary, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
     
-    // 3. 筛选灯条
+    //筛选灯条,用LightBar类
     vector<LightBar> light_bars;
     for (size_t i = 0; i < contours.size(); i++) {
         LightBar bar(contours[i]);
@@ -82,7 +75,7 @@ void ArmorDetector::processFrame(const Mat& frame, Mat& result) {
         }
     }
     
-    // 4. 匹配灯条对
+    //匹配灯条对
     vector<pair<LightBar, LightBar>> all_pairs;
     for (size_t i = 0; i < light_bars.size(); i++) {
         for (size_t j = i + 1; j < light_bars.size(); j++) {
@@ -93,7 +86,7 @@ void ArmorDetector::processFrame(const Mat& frame, Mat& result) {
         }
     }
     
-    // 5. 绘制装甲板
+    //绘制装甲板 保留绿框+PnP结果
     if (!all_pairs.empty()) {
         int best_idx = selectBestPair(all_pairs);
         auto& pair = all_pairs[best_idx];
@@ -102,16 +95,17 @@ void ArmorDetector::processFrame(const Mat& frame, Mat& result) {
         
         RotatedRect left = left_bar.getRect();
         RotatedRect right = right_bar.getRect();
-        if (left.center.x > right.center.x) {
+        if (left.center.x >right.center.x) {
             swap(left, right);
-            swap(left_bar, right_bar);
+            swap(left_bar,right_bar);
         }
-        
-        // 绘制绿框
+       
+
+        //绘制绿框
         Point2f left_pts[4], right_pts[4];
         left.points(left_pts);
         right.points(right_pts);
-        
+        float current_angle=right.angle;
         Point2f left_top, left_bottom, right_top, right_bottom;
         ToolUtils::sortVerticesByY(left_pts, left_top, left_bottom);
         ToolUtils::sortVerticesByY(right_pts, right_top, right_bottom);
@@ -119,7 +113,7 @@ void ArmorDetector::processFrame(const Mat& frame, Mat& result) {
         float avg_height = (ToolUtils::calcDistance(left_top, left_bottom) + 
                           ToolUtils::calcDistance(right_top, right_bottom)) * 0.5f;
         float horizontal_extend = avg_height * 0.1f;
-        float vertical_extend = avg_height * 0.2f;
+        float vertical_extend = avg_height * 0.1f;
         
         vector<Point2f> armor_pts(4);
         armor_pts[0] = Point2f(left_top.x - horizontal_extend, left_top.y - vertical_extend);
@@ -131,18 +125,21 @@ void ArmorDetector::processFrame(const Mat& frame, Mat& result) {
             int next = (i + 1) % 4;
             line(result, armor_pts[i], armor_pts[next], Scalar(0, 255, 0), 2);
         }
-        // 计算装甲板绿框水平中点
-        float centerX = (armor_pts[0].x + armor_pts[1].x) / 2;
-        // 绘制armoredplate文字
-        putText(result, "armoredplate", Point(centerX-60, armor_pts[0].y-10), 
-        FONT_HERSHEY_SIMPLEX, 0.7, Scalar(0,0,255), 2);
+    
         // PnP解算
         Mat rvec, tvec;
         solvePnP(ArmorConfig::armor_3d_points, armor_pts, ArmorConfig::camera_matrix, 
                  ArmorConfig::distort_coeffs, rvec, tvec);
-        float distance = static_cast<float>(norm(tvec));
+         float distance = static_cast<float>(norm(tvec));
+
+         // 计算装甲板绿框水平中点
+        float centerX = (armor_pts[0].x + armor_pts[1].x) / 2;
+        float centerY = (armor_pts[0].y + armor_pts[1].y) / 2;
+        // 绘制armoredplate文字
+        putText(result, "Dog", Point(centerX-60,centerY-10), 
+        FONT_HERSHEY_SIMPLEX, (1-distance), Scalar(0,0,255), 2);
         
-        // 左上角显示PnP结果
+        // 左上角显示PnP结果 品红
         string info_rvec = "Rvec: " + to_string(rvec.at<double>(0)) + ", " + to_string(rvec.at<double>(1)) + ", " + to_string(rvec.at<double>(2));
         string info_tvec = "Tvec(m): " + to_string(tvec.at<double>(0)) + ", " + to_string(tvec.at<double>(1)) + ", " + to_string(tvec.at<double>(2));
         string info_dist = "Distance: " + to_string(distance) + " m";
@@ -151,7 +148,4 @@ void ArmorDetector::processFrame(const Mat& frame, Mat& result) {
         putText(result, info_tvec, Point(10, 60), FONT_HERSHEY_SIMPLEX, 0.7, Scalar(255, 0, 255), 2);
         putText(result, info_dist, Point(10, 90), FONT_HERSHEY_SIMPLEX, 0.7, Scalar(255, 0, 255), 2);
     }
-    
-    imshow("2.Red Channel", r_channel);
-    imshow("3.Binary", binary);
 }

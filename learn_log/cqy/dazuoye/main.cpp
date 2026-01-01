@@ -4,7 +4,6 @@
 using namespace cv;
 using namespace std;
 
-//  完全复刻原主函数
 int main() {
     VideoCapture cap("video.avi");
     if (!cap.isOpened()) {
