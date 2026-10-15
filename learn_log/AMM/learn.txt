@@ -1,0 +1,45 @@
+学习日志 —— AMM
+
+2026/10/15 作业二：相机类编写与 YOLO 目标检测
+
+一、学习内容摘要
+1. 阅读 io/example.cpp，理清 hikrobot(MVS) SDK 的取流流程：
+   EnumDevices -> CreateHandle -> OpenDevice -> 设置参数 -> StartGrabbing
+   -> GetImageBuffer / FreeImageBuffer -> StopGrabbing -> CloseDevice -> DestroyHandle
+2. 实现 io::MyCamera：把上述流程封装成 open() / read() / close() 三个接口，
+   并用析构函数兜底 close()，避免忘记释放句柄导致相机被独占。
+3. 用 MV_CC_ConvertPixelTypeEx 把相机原始帧统一转成 BGR8，
+   对外只暴露 cv::Mat，屏蔽 Bayer / Mono 等像素格式差异。
+4. 补全 main.cpp 主循环：读图 -> yolo.detect() -> 用 tools/img_tools 绘制
+   检测框、四角点、中心点、置信度/颜色/编号/大小文本 -> imshow，按 q 退出。
+5. 新增 configs/camera.yaml，把曝光、增益、白平衡、帧率、翻转方式外置，
+   改参数不用重新编译。
+
+二、遇到的问题及解决思路
+1. example.cpp 的 transfer() 先按 CV_8U 建 Mat，再 cvtColor(Bayer->RGB)，
+   输入输出通道数不一致，实际依赖 OpenCV 内部重新分配。
+   -> 改为直接 create CV_8UC3 + MV_CC_ConvertPixelTypeEx，行为明确。
+2. 手动设置曝光/增益时写入无效。
+   -> 原因是自动曝光/自动增益仍开启，属性被锁定。
+      必须先 SetEnumValue 关掉 ExposureAuto / GainAuto，再写 ExposureTime / Gain。
+3. MV_CC_SetFrameRate 和 MV_CC_ConvertPixelType 已被标记为过时接口
+   （在 MvObsoleteInterfaces.h 中）。
+   -> 改用 AcquisitionFrameRateEnable + AcquisitionFrameRate 和 Ex 版本接口。
+4. GetImageBuffer 取流超时会频繁返回错误码。
+   -> 超时属正常现象，只返回 false 不打印日志，避免刷屏；
+      同时保证 GetImageBuffer 与 FreeImageBuffer 严格成对调用。
+5. 头文件里直接 include SDK 会污染使用方的编译环境。
+   -> 用 `struct _MV_FRAME_OUT_;` 前向声明，SDK 头文件只在 .cpp 中引入。
+
+三、参考资料
+1. 仓库 hw2/README.md 与项目结构说明
+2. hikrobot SDK 头文件 MvCameraControl.h / CameraParams.h / PixelType.h
+3. OpenCV 官方文档（轮廓绘制、cvtColor、rectangle、flip）
+4. tasks/yolos/yolov5.cpp 中的 draw_detections()（绘制风格参照）
+
+四、心得体会
+1. 相机这类独占资源一定要用 RAII 兜底，靠"记得关"迟早出事。
+2. 读 SDK 头文件比查文档快，过时接口和新接口的差别在注释里写得很清楚。
+3. 配置外置是性价比最高的重构，调参时省掉大量重复编译。
+4. 绘制逻辑与检测逻辑要分开，检测模块只管输出结构，
+   怎么画交给上层，这样换可视化方式不用动模型代码。

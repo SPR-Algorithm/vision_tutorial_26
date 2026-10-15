@@ -1,0 +1,19 @@
+# 相机配置：字段缺失时使用 MyCamera 中的默认值
+camera_name: "hikrobot"
+device_index: 0
+
+# 自动项：手动给定曝光/增益时必须关闭对应自动项
+exposure_auto: false
+gain_auto: false
+balance_white_auto: true
+
+# 曝光时间（us）；也可写 exposure_ms（ms），二者同时存在时以 exposure_time 为准
+exposure_time: 10000.0
+gain: 20.0
+frame_rate: 60.0
+
+# 图像翻转，取值同 cv::flip 的 flipCode（<0 上下+左右，0 上下，>0 左右），99 表示不翻转
+flip_code: 2
+
+# 取流超时（ms）
+timeout_ms: 1000
